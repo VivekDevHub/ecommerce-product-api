@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-# ecommerce-product-api
-A production-ready RESTful API for e-commerce product catalogs built with Node.js, Express, and MongoDB. Features secure JWT authentication, role-based access control, advanced filtering/search, pagination, and image upload capabilities.
-=======
 # Simple E-commerce Product API
 
 A RESTful API for managing e-commerce products with authentication, multiple image uploads, category filtering, validation, and error handling using Node.js, Express.js, MongoDB, and Mongoose.
@@ -404,4 +400,3 @@ Vivek Kushwah
 # License
 
 This project is for learning purposes.
->>>>>>> 7283984 (ecommerce-product-api)
