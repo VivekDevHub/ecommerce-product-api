@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import envs from "../config/env.config";
+import envs from "../config/env.config.js";
 
 const userSchema = mongoose.Schema({
   name: {

@@ -1,7 +1,7 @@
 // Higher-order function that wraps async controllers
 // and forwards errors to Express error middleware.
 
-function asyncWrapper(fn) {
+function asyncwrapper(fn) {
 
     //returning the Promise
     return (req,res,next) => {
@@ -12,4 +12,4 @@ function asyncWrapper(fn) {
     }
 }
 
-export default asyncWrapper
+export default asyncwrapper
