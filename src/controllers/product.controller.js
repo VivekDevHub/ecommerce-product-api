@@ -1,12 +1,11 @@
-const { default: mongoose } = require("mongoose");
+const mongoose = require("mongoose");
 const Product = require("../models/product.model");
+const imagekit = require("../config/imagekit");
 
 const getAllProduct = async (req, res) => {
   try {
     const { category } = req.query;
-    // if(!category){
-    //   return res.status(400).json({error : "Category is Required"})
-    // }
+ 
     let filter = {};
 
     if (category) {
@@ -15,17 +14,10 @@ const getAllProduct = async (req, res) => {
 
     const products = await Product.find(filter);
 
-    if (!products) {
-      return res.status(404).json({
-        success: false,
-        message: "Product not found",
-      });
-    }
-
     res.status(200).json({
       success: true,
       count: products.length,
-      product,
+      products,
     });
   } catch (error) {
     res.status(500).json({
@@ -43,9 +35,9 @@ const getProductById = async (req, res) => {
       return res.status(400).json({ error: "Invalid product ID" });
     }
 
-    const products = await Product.findById(id);
+    const product = await Product.findById(id);
 
-    if (!products) {
+    if (!product) {
       return res.status(404).json({
         success: false,
         message: "Product not found",
@@ -68,7 +60,7 @@ const createProduct = async (req, res) => {
   try {
     const { name, description, price, category } = req.body;
 
-    if (!name) {
+      if (!name) {
       return res.status(400).json({ error: "name is required" });
     }
 
@@ -90,11 +82,30 @@ const createProduct = async (req, res) => {
         .json({ error: "Description must be at least 10 characters long" });
     }
 
+
+    let imageUrls = [];
+
+     if (req.files && req.files.length > 0) {
+
+      for (const file of req.files) {
+
+        const uploadedImage = await imagekit.upload({  //Uploads image to ImageKit cloud.
+          file: file.buffer,  //Multer stores image temporarily in RAM.
+          fileName: Date.now() + "-" + file.originalname,
+        });
+
+        imageUrls.push(uploadedImage.url);
+      }
+    }
+
+  
     const newProduct = await Product.create({
       name,
       description,
       price,
       category,
+      images: imageUrls,
+
     });
 
     return res.status(201).json({
@@ -146,6 +157,13 @@ const updateProduct = async (req, res) => {
 const deleteProduct = async (req, res) => {
   try {
     const {id} = req.params;
+    
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+  return res.status(400).json({
+    error: "Invalid product ID",
+  });
+}
+
         const deletedProduct = await Product.findByIdAndDelete(id);
      
         if (!deletedProduct) {
