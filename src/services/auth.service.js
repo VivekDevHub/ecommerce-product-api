@@ -53,7 +53,7 @@ async function loginService(email, password) {
 
     // Generating the jwt token  for the user
     const token = newuser.generateJWT();
-
+    console.log("token =", token)
     // returning the user
     return { newuser, token };
 }

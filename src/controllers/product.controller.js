@@ -10,6 +10,7 @@ import ApiResponse from "../utils/ApiResponse.util.js";
 @Type POST
 */
 async function createProduct(req, res) {
+    console.log("req.user =", req.user);
 
     // Authorizing the user
     if (!req.user) {

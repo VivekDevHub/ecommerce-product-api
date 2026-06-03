@@ -3,6 +3,7 @@ import envs from "../config/env.config.js";
 
 // Function to check for the user to already exits or not
 function authMiddleware(req, res, next) {
+    console.log(req.cookies,"cookie hai ===");
     
     // accepting data
     let token = req.cookies.product_token;
@@ -12,6 +13,7 @@ function authMiddleware(req, res, next) {
 
     // if token is there then verify
     let decoded = jwt.verify(token, envs.JWT_SECRET_KEY);
+console.log("Decoded:", decoded);
 
     // set the token as a user
     req.user = decoded;

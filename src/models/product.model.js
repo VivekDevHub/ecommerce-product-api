@@ -29,5 +29,5 @@ const productSchema = new mongoose.Schema({
 
 
 // Made the model to handle the products in the database
-const productModel = await new mongoose.model("products", productSchema);
+const productModel =   mongoose.model("products", productSchema);
 export default productModel;
